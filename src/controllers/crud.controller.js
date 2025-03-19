@@ -34,9 +34,9 @@ const getUsersById = async (req, res) => {
 // Add a new user
 const addNewUser = async (req, res) => {
     try {
-        const {id, name, email, age, department } = req.body;
+        const {name, email,password, age, department } = req.body;
 
-        if (!name || !email || !department) {
+        if (!name || !email || !password || !department) {
             return res.status(HTTP_STATUS.BAD_REQUEST).json({ message: "Missing required fields!" });
         }
 
@@ -45,7 +45,7 @@ const addNewUser = async (req, res) => {
             return res.status(HTTP_STATUS.CONFLICT).json({ message: "User Already Exists" });
         }
 
-        const newUser = new User({ name, email, age, department });
+        const newUser = new User({ name, email,password, age, department });
         await newUser.save();
         
         return res.status(HTTP_STATUS.CREATED).json({ message: "A new user successfully added!", user: newUser });
